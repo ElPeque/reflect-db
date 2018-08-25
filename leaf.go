@@ -2,17 +2,18 @@ package reflect_db
 
 import (
 	"fmt"
+	"github.com/ElPeque/reflect-db/types"
 	"strings"
 )
 
-func leafPrintPath() walkCallback {
+func leafPrintPath() types.WalkCallback {
 	return func(path []string, obj interface{}) bool {
 		fmt.Println(strings.Join(append(path, fmt.Sprint(obj)), "."))
 		return true
 	}
 }
 
-func leafSum(sum *int) walkCallback {
+func leafSum(sum *int) types.WalkCallback {
 	return func(path []string, obj interface{}) bool {
 		val, ok := obj.(int)
 		if ok {
@@ -22,7 +23,7 @@ func leafSum(sum *int) walkCallback {
 	}
 }
 
-func leafAccumulate(avg *int) walkCallback {
+func leafAccumulate(avg *int) types.WalkCallback {
 	var vals []int
 
 	return func(path []string, obj interface{}) bool {

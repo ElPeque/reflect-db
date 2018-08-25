@@ -2,6 +2,7 @@ package reflect_db
 
 import (
 	"fmt"
+	"github.com/ElPeque/reflect-db/leaf_avg"
 	"testing"
 )
 
@@ -163,7 +164,7 @@ func TestGeneral(t *testing.T) {
 
 	Walk(
 		&datos,
-		All(leafPrintPath(), leafSum(&sum), leafAvg(&avg), leafAvg(&avgF), leafAvg(&avgUint64)),
+		All(leafPrintPath(), leafSum(&sum), leaf_avg.LeafAvg(&avg), leaf_avg.LeafAvg(&avgF), leaf_avg.LeafAvg(&avgUint64)),
 		whilePattern([]string{"Mapa", "*", "Cosas", "0", "*"}),
 	)
 

@@ -1,6 +1,10 @@
-package reflect_db
+package leaf_avg
 
-func leafAvg(avgIface interface{}) walkCallback {
+import (
+	"github.com/ElPeque/reflect-db/types"
+)
+
+func LeafAvg(avgIface interface{}) types.WalkCallback {
 	var count int
 	return func(path []string, obj interface{}) bool {
 

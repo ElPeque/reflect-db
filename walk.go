@@ -2,16 +2,15 @@ package reflect_db
 
 import (
 	"fmt"
+	"github.com/ElPeque/reflect-db/types"
 	"reflect"
 )
 
-type walkCallback func(path []string, obj interface{}) bool
-
-func Walk(obj interface{}, atLeaves, while walkCallback) {
+func Walk(obj interface{}, atLeaves, while types.WalkCallback) {
 	walk(nil, obj, atLeaves, while)
 }
 
-func walk(path []string, obj interface{}, atLeaves, while walkCallback) bool {
+func walk(path []string, obj interface{}, atLeaves, while types.WalkCallback) bool {
 	t := reflect.TypeOf(obj)
 	v := reflect.ValueOf(obj)
 
@@ -103,7 +102,7 @@ func walk(path []string, obj interface{}, atLeaves, while walkCallback) bool {
 	return true
 }
 
-func whilePattern(pattern []string) walkCallback {
+func whilePattern(pattern []string) types.WalkCallback {
 	return func(path []string, obj interface{}) bool {
 		if len(path) > 0 && (len(path) <= len(pattern)) {
 			if path[len(path)-1] != pattern[len(path)-1] && pattern[len(path)-1] != "*" {
@@ -114,7 +113,7 @@ func whilePattern(pattern []string) walkCallback {
 	}
 }
 
-func All(wcs ...walkCallback) walkCallback {
+func All(wcs ...types.WalkCallback) types.WalkCallback {
 	return func(path []string, obj interface{}) bool {
 		for _, wc := range wcs {
 			wc(path, obj)
@@ -123,7 +122,7 @@ func All(wcs ...walkCallback) walkCallback {
 	}
 }
 
-func Or(wcs ...walkCallback) walkCallback {
+func Or(wcs ...types.WalkCallback) types.WalkCallback {
 	return func(path []string, obj interface{}) bool {
 		for _, wc := range wcs {
 			if wc(path, obj) {
@@ -134,7 +133,7 @@ func Or(wcs ...walkCallback) walkCallback {
 	}
 }
 
-func And(wcs ...walkCallback) walkCallback {
+func And(wcs ...types.WalkCallback) types.WalkCallback {
 	return func(path []string, obj interface{}) bool {
 		for _, wc := range wcs {
 			if !wc(path, obj) {
