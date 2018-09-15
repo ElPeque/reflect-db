@@ -2,6 +2,7 @@ package reflect_db
 
 import (
 	"fmt"
+	"github.com/ElPeque/reflect-db/conv"
 	"github.com/ElPeque/reflect-db/leaf_avg"
 	"testing"
 )
@@ -156,9 +157,9 @@ func TestGeneral(t *testing.T) {
 	}
 
 	sum := 0
-	avg := 0
+	avg := float64(0.0)
 	avgF := float64(0.0)
-	avgUint64 := uint64(0)
+	avgUint64 := float64(0)
 
 	fmt.Println("avgF is at:", &avgF)
 
@@ -172,4 +173,21 @@ func TestGeneral(t *testing.T) {
 	fmt.Println("Avg:", avg)
 	fmt.Println("AvgF:", avgF)
 	fmt.Println("avgUint64:", avgUint64)
+}
+
+func TestGeneral2(t *testing.T) {
+	var a = uint(2)
+	var b = uint32(3)
+	var c = 4.19
+	var d = byte(5)
+
+	fmt.Println("-------")
+	fmt.Println(conv.ToFloat64(a))
+	fmt.Println(conv.ToFloat64(b))
+	fmt.Println(conv.ToFloat64(c))
+	fmt.Println(conv.ToFloat64(d))
+	fmt.Println(conv.ToFloat64(&a))
+	fmt.Println(conv.ToFloat64(&b))
+	fmt.Println(conv.ToFloat64(&c))
+	fmt.Println(conv.ToFloat64(&d))
 }

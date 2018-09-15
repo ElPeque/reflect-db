@@ -1,8 +1,10 @@
 package reflect_db
 
 import (
-	"fmt"
+	"github.com/ElPeque/reflect-db/conv"
 	"github.com/ElPeque/reflect-db/types"
+
+	"fmt"
 	"strings"
 )
 
@@ -15,10 +17,7 @@ func leafPrintPath() types.WalkCallback {
 
 func leafSum(sum *int) types.WalkCallback {
 	return func(path []string, obj interface{}) bool {
-		val, ok := obj.(int)
-		if ok {
-			*sum += val
-		}
+		*sum += conv.ToInt(obj)
 		return true
 	}
 }
